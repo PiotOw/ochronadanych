@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  backend:
+    image: 'od-backend:latest'
+    build:
+      context: .
+    container_name: backend
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/od_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    ports:
+      - 8443:8443
+    expose:
+      - 8443
+          
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=od_db
+    ports:
+      - 5433:5432
+#
+#  angular-docker:
+#    container_name: note-hub-frontend
+#    build: .
+#    ports:
+#      - '80:80'
+#      - '443:443'
+#    volumes:
+#      - ./ssl:/etc/nginx/certs
+#
