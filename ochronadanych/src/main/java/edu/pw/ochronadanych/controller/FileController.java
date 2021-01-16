@@ -5,6 +5,7 @@ import edu.pw.ochronadanych.dto.NoteDTO;
 import edu.pw.ochronadanych.services.file.FileService;
 import edu.pw.ochronadanych.services.note.NoteService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/api/files")
@@ -20,32 +22,21 @@ import java.util.List;
 @PreAuthorize("isAuthenticated()")
 public class FileController {
 
+	private final FileService fileService;
 
-    // pliki tylko swoje -- wszystkie
-
-    // zapis pojedynczego pliku  -- fileName, fileType, content
-
-    private final FileService fileService;
-
-    @GetMapping()
-    public ResponseEntity<List<FileDTO>> getAllLoggedUserFiles() {
-        return ResponseEntity.ok(fileService.getAllLoggedUserFiles());
-    }
-
-    @PostMapping()
-    public ResponseEntity<FileDTO> saveFile(@ModelAttribute FileDTO file) throws IOException, SQLException {
-        return ResponseEntity.ok(fileService.saveFile(file));
-    }
+	@Value("${edu.app.apiResponseTimeoutSec}")
+	private int apiTimeoutSec;
 
 
-    // opoznienie w aotoryzacji
+	@GetMapping()
+	public ResponseEntity<List<FileDTO>> getAllLoggedUserFiles() throws InterruptedException {
+		TimeUnit.SECONDS.sleep(apiTimeoutSec);
+		return ResponseEntity.ok(fileService.getAllLoggedUserFiles());
+	}
 
-
-    // zwrotka z proba logowania, po 3 probie blokada na 10 minut
-
-
-    // spring wpięcie ssl
-
-
-
+	@PostMapping()
+	public ResponseEntity<FileDTO> saveFile(@ModelAttribute FileDTO file) throws IOException, SQLException, InterruptedException {
+		TimeUnit.SECONDS.sleep(apiTimeoutSec);
+		return ResponseEntity.ok(fileService.saveFile(file));
+	}
 }

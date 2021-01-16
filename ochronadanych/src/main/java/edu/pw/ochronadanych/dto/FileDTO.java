@@ -18,21 +18,21 @@ import java.util.Base64;
 @Builder
 public class FileDTO {
 
-    @Nullable
-    private Long id;
-    private String fileName;
-    private String fileType;
-    private String fileExtension;
-    private Long fileSize;
-    private String savedContent;
-    private MultipartFile content;
+	@Nullable
+	private Long id;
+	private String fileName;
+	private String fileType;
+	private String fileExtension;
+	private Long fileSize;
+	private String savedContent;
+	private MultipartFile content;
 
-    public FileDTO(File file) {
-        this.id = file.getId();
-        this.fileName = file.getFileName();
-        this.fileType = file.getFileType();
-        this.fileExtension = file.getFileExtension();
-        this.fileSize = file.getSize();
-        this.savedContent = Arrays.toString(file.getContent());
-    }
+	public FileDTO(File file) {
+		this.id = file.getId();
+		this.fileName = file.getFileName();
+		this.fileType = file.getFileType();
+		this.fileExtension = file.getFileExtension();
+		this.fileSize = file.getSize();
+		this.savedContent = Arrays.toString(file.getContent());
+	}
 }

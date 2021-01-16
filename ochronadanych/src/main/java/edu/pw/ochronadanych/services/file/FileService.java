@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface FileService {
-    FileDTO saveFile(FileDTO file) throws IOException, SQLException;
+	FileDTO saveFile(FileDTO file) throws IOException, SQLException;
 
-    List<FileDTO> getAllLoggedUserFiles();
+	List<FileDTO> getAllLoggedUserFiles();
 }

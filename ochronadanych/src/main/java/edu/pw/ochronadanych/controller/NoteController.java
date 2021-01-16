@@ -3,11 +3,13 @@ package edu.pw.ochronadanych.controller;
 import edu.pw.ochronadanych.dto.NoteDTO;
 import edu.pw.ochronadanych.services.note.NoteService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/api/notes")
@@ -15,26 +17,20 @@ import java.util.List;
 @PreAuthorize("isAuthenticated()")
 public class NoteController {
 
-    // swoje + wszystkie publiczne notatki -- wszystkie public, private i protected dla zalegowanego uzytkownika
+	private final NoteService noteService;
 
-    // zapis notatki  - tytul, tresc, typ: publiczna, prywatna (tylko dla uzytkownika zalogownaeog), zaszyfrowana
-//                        title  content  type
+	@Value("${edu.app.apiResponseTimeoutSec}")
+	private int apiTimeoutSec;
 
-    private final NoteService noteService;
+	@GetMapping()
+	public ResponseEntity<List<NoteDTO>> getAllUserAndPublicNotes() throws InterruptedException {
+		TimeUnit.SECONDS.sleep(apiTimeoutSec);
+		return ResponseEntity.ok(noteService.getAllPublicAndAllLoggedUserNotes());
+	}
 
-        @GetMapping()
-    public ResponseEntity<List<NoteDTO>> getAllUserAndPublicNotes() {
-        return ResponseEntity.ok(noteService.getAllPublicAndAllLoggedUserNotes());
-    }
-
-    @PostMapping()
-    public ResponseEntity<NoteDTO> saveNote(@RequestBody NoteDTO note) {
-        return ResponseEntity.ok(noteService.addNote(note));
-    }
-
-
-    // opoznienie w aotoryzacji
-
-
-    // zwrotka z proba logowania, po 3 probie blokada na 10 minut
+	@PostMapping()
+	public ResponseEntity<NoteDTO> saveNote(@RequestBody NoteDTO note) throws InterruptedException {
+		TimeUnit.SECONDS.sleep(apiTimeoutSec);
+		return ResponseEntity.ok(noteService.addNote(note));
+	}
 }

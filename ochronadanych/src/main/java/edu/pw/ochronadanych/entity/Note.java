@@ -16,24 +16,24 @@ import javax.validation.constraints.NotBlank;
 @Builder
 public class Note {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column
-    @NotBlank
-    private String title;
+	@Column
+	@NotBlank
+	private String title;
 
-    @Column(columnDefinition = "text")
-    @NotBlank
-    private String content;
+	@Column(columnDefinition = "text")
+	@NotBlank
+	private String content;
 
-    @Column
-    @NotBlank
-    private NoteType type;
+	@Column
+	@NotBlank
+	private NoteType type;
 
-    @OneToOne(targetEntity = User.class)
-    private User user;
+	@OneToOne(targetEntity = User.class)
+	private User user;
 
 
 }

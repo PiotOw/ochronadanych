@@ -18,26 +18,26 @@ import java.sql.Clob;
 @Data
 public class File {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column
-    private String fileName;
+	@Column
+	private String fileName;
 
-    @Column
-    private String fileType;
+	@Column
+	private String fileType;
 
-    @Column
-    private String fileExtension;
+	@Column
+	private String fileExtension;
 
-    @Column
-    private Long size;
+	@Column
+	private Long size;
 
-//    @Lob
-    @Column(name = "content", columnDefinition="bytea")
-    private byte[] content;
+	//    @Lob
+	@Column(name = "content", columnDefinition="bytea")
+	private byte[] content;
 
-    @OneToOne(targetEntity = User.class)
-    private User user;
+	@OneToOne(targetEntity = User.class)
+	private User user;
 }

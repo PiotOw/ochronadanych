@@ -19,37 +19,37 @@ import java.util.stream.Collectors;
 @Slf4j
 public class NoteServiceImpl implements NoteService {
 
-    private final NoteRepository noteRepository;
-    private final UserRepository userRepository;
+	private final NoteRepository noteRepository;
+	private final UserRepository userRepository;
 
-    @Override
-    public NoteDTO addNote(NoteDTO note) {
+	@Override
+	public NoteDTO addNote(NoteDTO note) {
 
 
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = ((UserDetails)principal).getUsername();
-        User loggedUser = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = ((UserDetails)principal).getUsername();
+		User loggedUser = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        Note savedNote = noteRepository.save(Note.builder()
-                .title(note.getTitle())
-                .content(note.getContent())
-                .type(note.getType())
-                .user(loggedUser)
-                .build());
+		Note savedNote = noteRepository.save(Note.builder()
+				.title(note.getTitle())
+				.content(note.getContent())
+				.type(note.getType())
+				.user(loggedUser)
+				.build());
 
-        return NoteDTO.builder()
-                .id(savedNote.getId())
-                .title(savedNote.getTitle())
-                .content(savedNote.getContent())
-                .type(savedNote.getType())
-                .build();
+		return NoteDTO.builder()
+				.id(savedNote.getId())
+				.title(savedNote.getTitle())
+				.content(savedNote.getContent())
+				.type(savedNote.getType())
+				.build();
 
-    }
+	}
 
-    @Override
-    public List<NoteDTO> getAllPublicAndAllLoggedUserNotes() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username = ((UserDetails)principal).getUsername();
-        return noteRepository.getAllPublicAndAllLoggedUserNotes(username);
-    }
+	@Override
+	public List<NoteDTO> getAllPublicAndAllLoggedUserNotes() {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = ((UserDetails)principal).getUsername();
+		return noteRepository.getAllPublicAndAllLoggedUserNotes(username);
+	}
 }

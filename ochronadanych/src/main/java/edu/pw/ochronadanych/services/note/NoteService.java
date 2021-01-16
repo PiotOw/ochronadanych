@@ -6,7 +6,7 @@ import org.springframework.lang.Nullable;
 import java.util.List;
 
 public interface NoteService {
-    NoteDTO addNote(NoteDTO note);
+	NoteDTO addNote(NoteDTO note);
 
-    List<NoteDTO> getAllPublicAndAllLoggedUserNotes();
+	List<NoteDTO> getAllPublicAndAllLoggedUserNotes();
 }

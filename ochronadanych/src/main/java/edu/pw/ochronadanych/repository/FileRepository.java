@@ -11,8 +11,8 @@ import java.util.List;
 @Repository
 public interface FileRepository extends CrudRepository<File, Long> {
 
-    // new edu.pw.ochronadanych.dto.FileDTO(f)
-    @Query("select f from File f left join f.user u where u.username = ?1")
-    List<File> getAllLoggedUserFiles(String username);
+	// new edu.pw.ochronadanych.dto.FileDTO(f)
+	@Query("select f from File f left join f.user u where u.username = ?1")
+	List<File> getAllLoggedUserFiles(String username);
 
 }
