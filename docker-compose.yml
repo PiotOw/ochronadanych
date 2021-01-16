@@ -34,6 +34,6 @@ services:
       - '80:80'
       - '443:443'
     volumes:
-      - ./ssl:/etc/nginx/certs
+      - ./note-hub/ssl:/etc/nginx/certs
     depends_on:
       - backend
